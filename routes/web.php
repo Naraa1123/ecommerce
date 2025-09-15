@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,9 +21,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/admin/category',function(){
-       return view('admin.category.index');
-    })->name('admin.category');
+    Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.category');
+    Route::get('/admin/categories/create', [CategoryController::class, 'create']);
+    Route::post('/admin/categories/store', [CategoryController::class, 'store'])->name('admin.category.store');
+    Route::get('/admin/categories/{id}', [CategoryController::class, 'show']);
+    Route::get('/admin/categories/{id}/edit', [CategoryController::class, 'edit']);
+    Route::put('/admin/categories/{id}', [CategoryController::class, 'update']);
+    Route::delete('/admin/categories/{id}', [CategoryController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';
