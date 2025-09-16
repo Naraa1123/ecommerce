@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/categories/{id}/edit', [CategoryController::class, 'edit']);
     Route::put('/admin/categories/{id}', [CategoryController::class, 'update']);
     Route::delete('/admin/categories/{id}', [CategoryController::class, 'destroy']);
+
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products');
+    Route::get('/admin/products/create', [ProductController::class, 'create'])->name('admin.product.create');
+    Route::post('/admin/products/store', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::get('/admin/products/{id}', [ProductController::class, 'show']);
+    Route::get('/admin/products/{id}/edit', [ProductController::class, 'edit']);
+    Route::put('/admin/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']);
+
+
 });
 
 require __DIR__.'/auth.php';
